@@ -1,0 +1,7 @@
+Complete the following tasks:
+
+authentificationTask.txt - forward code for review.
+validateString.php - forward code for review.
+
+All code will be used during interview. Candidate will be expected
+to speak to their solutions.

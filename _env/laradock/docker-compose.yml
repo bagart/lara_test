@@ -1,0 +1,109 @@
+version: '2'
+services:
+### Workspace Utilities Container ###########################
+    workspace:
+        build:
+            context: ./workspace
+            args:
+                - INSTALL_XDEBUG=false
+                - COMPOSER_GLOBAL_INSTALL=true
+                - PUID=1000
+                - PGID=1000
+        volumes_from:
+            - volumes_source
+        extra_hosts:
+            # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
+            - "dockerhost:10.0.75.1"
+        tty: true
+        environment:
+            # IMPORTANT: Set the Remote Interpreter entry matching name to `laravel`
+            - PHP_IDE_CONFIG = serverName=laravel
+
+### PHP-FPM Container #######################################
+
+    php-fpm:
+        build:
+            context: ./php-fpm
+            args:
+                - INSTALL_XDEBUG=true
+                - INSTALL_MEMCACHED=false
+                - INSTALL_OPCACHE=false
+            dockerfile: Dockerfile-56
+        volumes_from:
+            - volumes_source
+        expose:
+            - "9000"
+        links:
+            - workspace
+        extra_hosts:
+            # IMPORTANT: Replace with your Docker Host IP (will be appended to /etc/hosts)
+            - "dockerhost:10.0.75.1"
+        environment:
+            # IMPORTANT: Set the Remote Interpreter entry matching name to `laravel`
+            - PHP_IDE_CONFIG = serverName=laravel
+
+### Nginx Server Container ##################################
+
+    nginx:
+        build:
+            context: ./nginx
+            args:
+                - PHP_UPSTREAM=php-fpm
+        volumes_from:
+            - volumes_source
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - php-fpm
+
+### MySQL Container #########################################
+
+    mysql:
+        build: ./mysql
+        volumes_from:
+            - volumes_data
+        ports:
+            - "127.0.0.1:3306:3306"
+        environment:
+            MYSQL_DATABASE: homestead
+            MYSQL_USER: homestead
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: root
+
+### phpMyAdmin Container ##################################
+
+#    phpmyadmin:
+#        build: ./phpmyadmin
+#        environment:
+#            PMA_ARBITRARY: 1
+#            MYSQL_USER: homestead
+#            MYSQL_PASSWORD: secret
+#            MYSQL_ROOT_PASSWORD: root
+#        volumes_from:
+#            - volumes_data
+#        ports:
+#            - "127.0.0.1:8080:80"
+#        links:
+#            - "mysql:db"
+
+### Laravel Application Code Container ######################
+
+    volumes_source:
+        image: tianon/true
+        volumes:
+            - ../auth_test:/var/www/laravel
+
+
+### Databases Data Container ################################
+
+    volumes_data:
+        image: tianon/true
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+            - ./data/memcached:/var/lib/memcached
+            - ./data/sessions:/sessions
+
+### Add more Containers below ###############################
