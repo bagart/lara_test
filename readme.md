@@ -20,7 +20,9 @@ _env/install.txt
     
     just run with auto-connect: ``cmd/up.sh``
  - `` composer update `` 1st time or if needed
- - check at http://localhost
+ - check 
+    at http://localhost
+    phpunit ``composer test``
 
 ###Task original:
 doc/*
