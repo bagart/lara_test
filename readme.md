@@ -3,17 +3,24 @@
  - Laravel PHP Framework
  - Composer
  - PHPUnit
- - LaraDock (docker-compose)
+ - LaraDock (docker-compose, support: linux, windows, mac)
 
 #Install: 
 _env/install.txt 
  
 #RUN
- 1st install docker-compose
+ - install git, optional: php, composer
+ - install docker-compose (detail in _env/install.txt) or custom laravel environment
+ - download this project: ``git clone https://github.com/bagart/lara_test.git``
+ - run environment
  
- build docker ``cmd/install/docker-install.sh``
- 
- or just run already built ``cmd/up.sh``
+    docker-commpose:
+    
+    1st time or full upgrade: ``cmd/install/docker-install.sh``
+    
+    just run with auto-connect: ``cmd/up.sh``
+ - `` composer update `` 1st time or if needed
+ - check at http://localhost
 
 ###Task original:
 doc/*
