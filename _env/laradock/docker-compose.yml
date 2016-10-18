@@ -94,7 +94,7 @@ services:
     volumes_source:
         image: tianon/true
         volumes:
-            - ../auth_test:/var/www/laravel
+            - ../lara_test:/var/www/laravel
 
 
 ### Databases Data Container ################################
