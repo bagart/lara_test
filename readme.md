@@ -10,16 +10,22 @@ _env/install.txt
  
 #RUN
  - install git, optional: php, composer
- - install docker-compose (detail in _env/install.txt) or custom laravel environment
- - download this project: ``git clone https://github.com/bagart/lara_test.git``
+ - prepare environment [_env/install.md](_env/install.md) docker-compose or custom laravel environment
+ - download this project: 
+ 
+    ``git clone https://github.com/bagart/lara_test.git``
+    
+ - @todo fix permission for typical laravel cache path
+ 
  - run environment
  
-    docker-commpose:
+    docker-compose:
     
     1st time or full upgrade: ``cmd/install/docker-install.sh``
     
     just run with auto-connect: ``cmd/up.sh``
- - `` composer update `` 1st time or if needed
+ - 1st time: `` composer install && php artisan migrate``  
+    update: `` composer update ``
  - check 
     at http://localhost
     phpunit ``composer test``
@@ -41,4 +47,22 @@ $inputString = $_GET['i'];
 echo "'".$inputString."' is ";
 echo validateString($inputString)?"correct":"incorrect";
 ```
+
+code: [lara_test\app\Helpers\ValidateString.php](lara_test\app\Helpers\ValidateString.php)
+
+full self-made just for fun
+
+## Task test
+brackets:
+- correct [1[2{3}4]5](http://localhost/validateString.php?i=1[2{3}4]5)
+- incorrect [{[}]](http://localhost/validateString.php?i={[}])
+
+quotes:
+- correct [1'2"3"4'5]( http://localhost/validateString.php?q=1'2"3"4'5)
+- incorrect ['""](http://localhost/validateString.php?q='"")
+
+both
+- correct [i={{[]}}&q="''"]( http://localhost/validateString.php?i={{[]}}&q="''")
+- incorrect [i=0{0{0[0}0]0}0&q=0'0"0'0"0]( http://localhost/validateString.php?i=0{0{0[0}0]0}0&q=0'0"0'0"0)
+
 

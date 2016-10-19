@@ -75,19 +75,19 @@ services:
 
 ### phpMyAdmin Container ##################################
 
-#    phpmyadmin:
-#        build: ./phpmyadmin
-#        environment:
-#            PMA_ARBITRARY: 1
-#            MYSQL_USER: homestead
-#            MYSQL_PASSWORD: secret
-#            MYSQL_ROOT_PASSWORD: root
-#        volumes_from:
-#            - volumes_data
-#        ports:
-#            - "127.0.0.1:8080:80"
-#        links:
-#            - "mysql:db"
+    phpmyadmin:
+        build: ./phpmyadmin
+        environment:
+            PMA_ARBITRARY: 1
+            MYSQL_USER: homestead
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: root
+        volumes_from:
+            - volumes_data
+        ports:
+            - "127.0.0.1:8080:80"
+        links:
+            - "mysql:db"
 
 ### Laravel Application Code Container ######################
 
@@ -95,7 +95,6 @@ services:
         image: tianon/true
         volumes:
             - ../lara_test:/var/www/laravel
-
 
 ### Databases Data Container ################################
 
