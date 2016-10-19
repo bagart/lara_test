@@ -48,7 +48,7 @@ echo "'".$inputString."' is ";
 echo validateString($inputString)?"correct":"incorrect";
 ```
 
-code: [lara_test\app\Helpers\ValidateString.php](lara_test\app\Helpers\ValidateString.php)
+code: [lara_test/app/Helpers/ValidateString.php](lara_test/app/Helpers/ValidateString.php)
 
 full self-made just for fun
 

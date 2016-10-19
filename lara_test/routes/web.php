@@ -16,13 +16,26 @@ Route::get('/', function () {
 });
 
 /**
- * task as is
+ * as task needed
+ * @todo move to controller with, form and ajax API? :)
  */
 Route::get('/validateString.php', function () {
+    //important
     $i = Request::get('i');
-    return var_export($i, true) . ' is ' . (
+    $result['i'] = var_export($i, true) . ' is ' . (
         (new App\Helpers\ValidateString)->isValidBrackets($i)
             ? "correct"
             : "incorrect"
     );
+    //optional
+    $q = Request::get('q');
+    if ($q !== null) {
+        $result['q'] = 'quotes: ' . var_export($q, true) . ' is ' . (
+        (new App\Helpers\ValidateString)->isValidQuotes($q)
+            ? "correct"
+            : "incorrect"
+        );
+    }
+
+    return implode('<br />', $result);
 });
