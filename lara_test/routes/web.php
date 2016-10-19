@@ -39,3 +39,8 @@ Route::get('/validateString.php', function () {
 
     return implode('<br />', $result);
 });
+
+Route::get('/admin/login', function () {});
+Route::get('/sales/login', function () {});
+Route::get('/site/login/pid/{hash}', function ($hash) {});
+

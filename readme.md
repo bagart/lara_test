@@ -66,3 +66,33 @@ both
 - incorrect [i=0{0{0[0}0]0}0&q=0'0"0'0"0]( http://localhost/validateString.php?i=0{0{0[0}0]0}0&q=0'0"0'0"0)
 
 
+
+
+
+#Task2: CustomAuth
+
+```
+Need to implement complex multipoint authentication for web application.
+
+Two tables should be used: ‘users’ and ‘as_users’.
+Only users with ‘user_type_id’ = 6 from ‘users’ should be used. Users from this table gather role GSM Admin.
+For users from ‘as_users’ roles described in ‘as_user_types’ table.
+
+There are 3 entry points for different roles:
+1.	/admin/login
+2.	/sales/login
+3.	/site/login/pid/”hash” (where hash is client specific hash from corresponding table, like - site/login/pid/RVM1G5621DGYHI)
+
+Restrictions by roles:
+1.	Only GSM Admins are allowed to login
+2.	GSM Admins, Sales Users/Admins, Sales Users/Admins are allowed to login.
+3.	All user roles are allowed, but Client Admins are allowed to login only using own client hash (as_clients->hash).
+	Any Client Admin has relation to Client table by ‘clientId’ field.
+
+Find in authDB.sql SQL dump for task.
+Feel free to use any encrypt password mechanism you prefer. You don’t need to use current password values.
+
+For implementation use PHP 5.x
+No any framework restrictions.
+```
+
